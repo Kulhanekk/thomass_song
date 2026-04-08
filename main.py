@@ -1,6 +1,8 @@
 import tkinter as tk
 import threading
-from engine import play_melody
+import random
+from sorter import tomas_sorter_function
+from engine import play_melody, play_melody_scrambeled
 from sheet_music import MELODY
 
 class MusicApp:
@@ -29,8 +31,14 @@ class MusicApp:
 
     def start_playback(self):
         # We use a thread so the UI stays responsive while music plays
-        thread = threading.Thread(target=play_melody, args=(MELODY,), daemon=True)
+        # thread = threading.Thread(target=play_melody, args=(MELODY,), daemon=True)
+        thread = threading.Thread(target=play_melody_scrambeled, args=(MELODY, tomas_sorter_function(self.melody_scramble()), ), daemon=True)
         thread.start()
+
+    def melody_scramble(self):
+        indices = list(range(len(MELODY)))
+        random.shuffle(indices)
+        return indices
 
 if __name__ == "__main__":
     root = tk.Tk()
