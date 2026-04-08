@@ -6,4 +6,7 @@ miláčka. Upil si pár piv a jeho pohled
 """
 
 def tomas_sorter_function(scrambled_list):
-    return sorted(scrambled_list)
+
+    
+
+    return scrambled_list

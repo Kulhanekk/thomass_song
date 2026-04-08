@@ -11,10 +11,16 @@ class MusicApp:
         self.root.title("tomasovo potkani s jindrou v hospode")
         self.root.geometry("1280x720")
         self.root.configure(padx=20, pady=20)
+        self.root.state('zoomed')
         
         self.setup_ui()
 
     def setup_ui(self):
+        self.bg = tk.PhotoImage(file="./images/regular.png")
+        label1 = tk.Label(self.root, image=self.bg)
+
+        label1.place(x = 0, y = 0)
+
         tk.Label(self.root, text="♪ Melody Player ♪", font=("Helvetica", 16, "bold")).pack(pady=(0, 5))
         tk.Label(self.root, text="Tempo: 120 BPM | Signature: 3/4", font=("Helvetica", 10)).pack(pady=(0, 15))
 
@@ -30,10 +36,17 @@ class MusicApp:
         self.play_btn.pack(pady=10)
 
     def start_playback(self):
-        # all(l[i] <= l[i+1] for i in range(len(l) - 1))
+        input_arr = tomas_sorter_function(self.melody_scramble())
+        if input_arr == sorted(input_arr):
+            self.bg = tk.PhotoImage(file="./images/playing_happy.png")
+        else:
+            self.bg = tk.PhotoImage(file="./images/playing_angry.png")
+
+        label1 = tk.Label(self.root, image=self.bg)
+        label1.place(x = 0, y = 0)
         # We use a thread so the UI stays responsive while music plays
-        thread = threading.Thread(target=play_melody, args=(MELODY,), daemon=True)
-        # thread = threading.Thread(target=play_melody_scrambeled, args=(MELODY, tomas_sorter_function(self.melody_scramble()), ), daemon=True)
+        # thread = threading.Thread(target=play_melody, args=(MELODY,), daemon=True)
+        thread = threading.Thread(target=play_melody_scrambeled, args=(MELODY, input_arr, ), daemon=True)
         thread.start()
 
     def melody_scramble(self):
