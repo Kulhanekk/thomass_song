@@ -8,8 +8,8 @@ from sheet_music import MELODY
 class MusicApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Sheet Music Player")
-        self.root.geometry("350x200")
+        self.root.title("tomasovo potkani s jindrou v hospode")
+        self.root.geometry("1280x720")
         self.root.configure(padx=20, pady=20)
         
         self.setup_ui()
@@ -30,9 +30,10 @@ class MusicApp:
         self.play_btn.pack(pady=10)
 
     def start_playback(self):
+        # all(l[i] <= l[i+1] for i in range(len(l) - 1))
         # We use a thread so the UI stays responsive while music plays
-        # thread = threading.Thread(target=play_melody, args=(MELODY,), daemon=True)
-        thread = threading.Thread(target=play_melody_scrambeled, args=(MELODY, tomas_sorter_function(self.melody_scramble()), ), daemon=True)
+        thread = threading.Thread(target=play_melody, args=(MELODY,), daemon=True)
+        # thread = threading.Thread(target=play_melody_scrambeled, args=(MELODY, tomas_sorter_function(self.melody_scramble()), ), daemon=True)
         thread.start()
 
     def melody_scramble(self):
