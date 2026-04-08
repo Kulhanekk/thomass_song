@@ -12,7 +12,7 @@ class MusicApp:
         self.root.geometry("1280x720")
         self.root.configure(padx=20, pady=20)
         self.root.state('zoomed')
-        
+
         self.setup_ui()
 
     def setup_ui(self):
@@ -21,19 +21,16 @@ class MusicApp:
 
         label1.place(x = 0, y = 0)
 
-        tk.Label(self.root, text="♪ Melody Player ♪", font=("Helvetica", 16, "bold")).pack(pady=(0, 5))
-        tk.Label(self.root, text="Tempo: 120 BPM | Signature: 3/4", font=("Helvetica", 10)).pack(pady=(0, 15))
-
         self.play_btn = tk.Button(
             self.root, 
-            text="▶ Play Sheet Music", 
+            text="▶ Play Music", 
             command=self.start_playback,
-            font=("Helvetica", 12), 
+            font=("Helvetica", 35), 
             bg="#2B422C", 
             fg="white", 
             width=20
         )
-        self.play_btn.pack(pady=10)
+        self.play_btn.pack(pady=150)
 
     def start_playback(self):
         input_arr = tomas_sorter_function(self.melody_scramble())
