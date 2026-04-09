@@ -25,27 +25,43 @@ spásný nápad - naprogramovat řadicí algoritmus, který by za něj listy ble
 uspořádal. "To můj problém určitě vyřeší!" zvolal nadšeně.
 """
 
+# nápověda 1:
+"""
+scrambled_list je seznam not v nahodném pořadí jak jdou za sebou. 
+scrambled_list = [3, 5, 8, 114, 65, .... ]
+"""
+
 def tomas_sorter_function_hard(scrambled_list):
     n = len(scrambled_list)
     
-    for i in range(n):
+    for i in range(0, n):
             scrambled_list[i] = scrambled_list[i] #remove this
 
     return scrambled_list
 
+# nápověda 2:
+"""
+Porovnávání každého prvku s každým s vyšším indexem
+"""
+
 def tomas_sorter_function_medium(scrambled_list):
     n = len(scrambled_list)
     
-    for i in range(n):
+    for i in range(0, n):
         for j in range(0, n - i - 1):
             scrambled_list[j] = scrambled_list[j] #remove this
 
     return scrambled_list
 
+# nápověda 3:
+"""
+Je prvek s vyšším indexem větší než aktuální prvek?
+"""
+
 def tomas_sorter_function_easy(scrambled_list):
     n = len(scrambled_list)
     
-    for i in range(n):
+    for i in range(0, n):
         for j in range(0, n - i - 1):
             if scrambled_list[j] > scrambled_list[j + 1]:
                 # add here

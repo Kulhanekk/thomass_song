@@ -12,15 +12,37 @@ def generate_sound(frequency, duration):
     sample_rate = 44100
     t = np.linspace(0, duration, int(sample_rate * duration), False)
     
-    # Harmonic additive synthesis
-    wave = 0.6 * np.sin(2 * np.pi * frequency * t)
-    wave += 0.3 * np.sin(2 * np.pi * (frequency * 2) * t)
-    wave += 0.1 * np.sin(2 * np.pi * (frequency * 3) * t)
+    # 1. Odd Harmonic Additive Synthesis
+    # Clarinet spectra are dominated by odd harmonics (1, 3, 5)
+    wave = 0.7 * np.sin(2 * np.pi * frequency * t)         # Fundamental
+    wave += 0.25 * np.sin(2 * np.pi * (frequency * 3) * t)  # 3rd Harmonic
+    wave += 0.1 * np.sin(2 * np.pi * (frequency * 5) * t)   # 5th Harmonic
+    
+    # 2. Add subtle breathiness (Noise)
+    # This simulates the sound of air passing through the instrument
+    noise = (np.random.random(len(t)) - 0.5) * 0.02
+    wave += noise
 
-    # Pluck Envelope
-    envelope = np.exp(-3.0 * t / duration) 
+    # 3. ADSR Envelope (Attack, Decay, Sustain, Release)
+    # Instead of a pluck (exponential decay), we use a wind envelope
+    total_samples = len(t)
+    attack_samples = int(sample_rate * 0.04) # 40ms attack
+    release_samples = int(sample_rate * 0.05) # 50ms release
+    
+    envelope = np.ones(total_samples)
+    
+    # Attack: Fade in
+    if attack_samples < total_samples:
+        envelope[:attack_samples] = np.linspace(0, 1, attack_samples)
+    
+    # Release: Fade out
+    if release_samples < total_samples:
+        envelope[-release_samples:] = np.linspace(1, 0, release_samples)
+    
     wave *= envelope
 
+    # 4. Final Processing
+    # Normalize and convert to 16-bit PCM
     audio = np.int16(wave * 32767)
     stereo_audio = np.column_stack((audio, audio))
     return pygame.sndarray.make_sound(stereo_audio)
