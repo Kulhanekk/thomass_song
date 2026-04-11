@@ -28,15 +28,29 @@ uspořádal. "To můj problém určitě vyřeší!" zvolal nadšeně.
 # nápověda 1:
 """
 scrambled_list je seznam not v nahodném pořadí jak jdou za sebou. 
-scrambled_list = [3, 5, 8, 114, 65, .... ]
+scrambled_list = [5, 2, 8, 114, 65, .... ]
 """
 
 def tomas_sorter_function_hard(scrambled_list):
-    n = len(scrambled_list)
+    serazene_pole = []
+    for i in range(len(scrambled_list)):
+        misto_nejmensiho = scrambled_list.index(min(scrambled_list))
+        serazene_pole.append(scrambled_list[misto_nejmensiho])
+        scrambled_list.pop(misto_nejmensiho)
+    return serazene_pole
     
-    for i in range(0, n):
-            scrambled_list[i] = scrambled_list[i] #remove this
-
+    
+    '''
+    print(scrambled_list)
+    print()
+    n = len(scrambled_list)
+    for j in range(0, n-1):
+        for i in range(0, n-j-1):
+            if scrambled_list[i] > scrambled_list[i+1]:
+                pomocna = scrambled_list[i]
+                scrambled_list[i] = scrambled_list[i+1]
+                scrambled_list[i+1] = pomocna
+    print(scrambled_list) '''      
     return scrambled_list
 
 # nápověda 2:
